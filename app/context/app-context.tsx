@@ -11,6 +11,7 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 type State = { 
   selected: string, 
   click_num: number,
+  comp_count: number,
   matrix: [
     [ {}, {}, {} ],
     [ {}, {}, {} ],
@@ -23,6 +24,7 @@ type State = {
 const init_state: State = {
   selected: '',
   click_num: 0,
+  comp_count: 0,
   matrix: [
     [ {}, {}, {} ],
     [ {}, {}, {} ],

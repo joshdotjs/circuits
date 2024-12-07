@@ -59,26 +59,33 @@ function Point({ x, y }: { x: number, y: number }) {
       new_matrix[y][x] = {
         component: prev.selected,
         node_num:  prev.click_num,
+        comp_id:   prev.comp_count,
       };
 
-      let new_click_num, new_selected;
+      let new_click_num, new_selected, new_comp_count;
       if (prev.click_num === 1) {
-        new_click_num = 2;
-        new_selected  = prev.selected;
+        new_click_num  = 2;
+        new_comp_count = prev.comp_count;
+        new_selected   = prev.selected;
       }
       else {
-        new_click_num = 0;
-        new_selected  = '';
+        new_click_num  = 0;
+        new_comp_count = prev.comp_count + 1;
+        new_selected   = '';
       }
-      
+
       return ({
         ...prev,
-        selected:  new_selected,
-        click_num: new_click_num,
-        matrix:    new_matrix,
+        selected:    new_selected,
+        click_num:   new_click_num,
+        comp_count:  new_comp_count,
+        matrix:      new_matrix,
       });
     });
   };
+
+  // TODO: Display the component id in the cells
+  // TODO: Don't allow already placed cells to be clicked
 
   // ==================================
 
