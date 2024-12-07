@@ -1,0 +1,9 @@
+# Next.js
+.next/
+out/
+node_modules
+
+# Other common files
+.DS_Store
+*.log
+*.swp
