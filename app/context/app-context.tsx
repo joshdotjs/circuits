@@ -9,8 +9,8 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 
 // Define the shape of the context state
 interface AppState {
-  state: string | null;
-  setState: (slug: string | null) => void;
+  state: { selected: string } | null;
+  setState: React.Dispatch<React.SetStateAction<{ selected: string } | null>>;
 }
 
 // ====================================
@@ -28,7 +28,7 @@ const AppContext = createContext<AppState | undefined>(undefined);
 
 // Create the provider component
 export const AppContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [state, setState] = useState<string | null>(null);
+  const [state, setState] = useState<{ selected: string } | null>(null);
 
   useEffect(() => console.log('app context state: ', state), [state]);
 

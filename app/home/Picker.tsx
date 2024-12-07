@@ -37,7 +37,9 @@ export default function Picker() {
 
   // ==================================
 
-  const onClick = (slug: string) => setState(slug);
+  const onClick = (slug: string) => {
+    setState({ selected: slug });
+  };
 
   // ==================================
 
@@ -48,10 +50,10 @@ export default function Picker() {
           return (
             <div 
               key={`picker-component-${slug}`}
+              // ${ state === slug ? 'border-yellow-500 !important' : ''  }
               className={
                 `
                   h-10  w-10  hover:border-blue-500  border-white  border-2
-                  ${ state === slug ? 'border-yellow-500 !important' : ''  }
                 `
               }
               onClick={() => onClick(slug)}

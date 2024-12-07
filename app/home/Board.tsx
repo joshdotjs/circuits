@@ -48,7 +48,9 @@ function Point({ x, y }: { x: number, y: number }) {
 
   // ==================================
 
-  const onClick = () => setState(null);
+  const onClick = () => {
+    setState(null);
+  };
 
   // ==================================
 
