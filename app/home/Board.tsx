@@ -44,12 +44,28 @@ function Point({ x, y }: { x: number, y: number }) {
 
   // ==================================
 
-  const { setState } = useAppContext();
+  const { state, setState } = useAppContext();
 
   // ==================================
 
-  const onClick = () => {
-    setState(null);
+  const onClick = (y: number, x: number) => {
+    
+    setState((prev) => {
+
+      if (!prev)
+        throw new Error("state is null");
+
+      const matrix = structuredClone(prev.matrix);
+      matrix[y][x] = {
+        component: prev.selected,
+      };
+
+      return ({
+        ...prev,
+        click_num: 1,
+        matrix,
+      });
+    });
   };
 
   // ==================================
@@ -58,10 +74,15 @@ function Point({ x, y }: { x: number, y: number }) {
     <div
       data-y="0" 
       data-x={x} 
-      className="hover:bg-blue-500 h-4 w-4 border-r border-b border-blue-500"
+      className={
+        `
+          hover:bg-blue-500 h-4 w-4 border-r border-b border-blue-500
+          ${state === null ? 'pointer-events-none' : ''}
+        `
+      }
       onClick={() => {
         console.log(`row: ${y}, col: ${x}`);
-        onClick();
+        onClick(y, x);
       }}
     >
     </div>

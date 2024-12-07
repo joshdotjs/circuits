@@ -7,10 +7,31 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 // ====================================
 // ====================================
 
+// Define the shape of the state variable
+type State = { 
+  selected: string, 
+  click_num: number,
+  matrix: [
+    [ {}, {}, {} ],
+    [ {}, {}, {} ],
+    [ {}, {}, {} ],
+  ],
+};
+
+const init_state: State = {
+  selected: '',
+  click_num: 0,
+  matrix: [
+    [ {}, {}, {} ],
+    [ {}, {}, {} ],
+    [ {}, {}, {} ],
+  ],
+};
+
 // Define the shape of the context state
-interface AppState {
-  state: { selected: string } | null;
-  setState: React.Dispatch<React.SetStateAction<{ selected: string } | null>>;
+type AppState = {
+  state: State;
+  setState: React.Dispatch<React.SetStateAction<State>>;
 }
 
 // ====================================
@@ -28,7 +49,7 @@ const AppContext = createContext<AppState | undefined>(undefined);
 
 // Create the provider component
 export const AppContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [state, setState] = useState<{ selected: string } | null>(null);
+  const [state, setState] = useState<State>(init_state);
 
   useEffect(() => console.log('app context state: ', state), [state]);
 
