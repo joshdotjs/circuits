@@ -55,15 +55,27 @@ function Point({ x, y }: { x: number, y: number }) {
       if (!prev)
         throw new Error("state is null");
 
-      const matrix = structuredClone(prev.matrix);
-      matrix[y][x] = {
+      const new_matrix = structuredClone(prev.matrix);
+      new_matrix[y][x] = {
         component: prev.selected,
+        node_num:  prev.click_num,
       };
 
+      let new_click_num, new_selected;
+      if (prev.click_num === 1) {
+        new_click_num = 2;
+        new_selected  = prev.selected;
+      }
+      else {
+        new_click_num = 0;
+        new_selected  = '';
+      }
+      
       return ({
         ...prev,
-        click_num: 1,
-        matrix,
+        selected:  new_selected,
+        click_num: new_click_num,
+        matrix:    new_matrix,
       });
     });
   };
@@ -77,7 +89,7 @@ function Point({ x, y }: { x: number, y: number }) {
       className={
         `
           hover:bg-blue-500 h-4 w-4 border-r border-b border-blue-500
-          ${state === null ? 'pointer-events-none' : ''}
+          ${state.click_num === 0 ? 'pointer-events-none' : ''}
         `
       }
       onClick={() => {
