@@ -9,13 +9,18 @@ import { useAppContext } from '@/app/context/app-context';
 // ====================================
 
 export default function Board() {
+
+  // ==================================
+
+  const { state, setState } = useAppContext();
+
+  // ==================================
+
   return (
     <div className="border-blue-500 border-2">
-      <Row y={0} />
-      <Row y={1} />
-      <Row y={2} />
-      <Row y={3} />
-      <Row y={4} />
+      {
+        state.matrix.map((row, idx) => <Row key={`board-row-${idx}`} y={idx} row={row} />)
+      }
     </div>
   );
 }
@@ -25,12 +30,12 @@ export default function Board() {
 // ====================================
 // ====================================
 
-function Row({ y }: { y: number }) {
+function Row({ y, row }: { y: number, row: any[] }) {
   return (
     <div className="flex">
-      <Point y={y} x={0} />
-      <Point y={y} x={1} />
-      <Point y={y} x={2} />
+      {
+        row.map((point, idx) => <Point key={`board-row-${y}-col-${idx}`} y={y} x={idx} point={point} />)
+      }
     </div>   
   );
 }
@@ -40,7 +45,7 @@ function Row({ y }: { y: number }) {
 // ====================================
 // ====================================
 
-function Point({ x, y }: { x: number, y: number }) {
+function Point({ x, y, point }: { x: number, y: number, point: any }) {
 
   // ==================================
 
@@ -96,7 +101,9 @@ function Point({ x, y }: { x: number, y: number }) {
       className={
         `
           hover:bg-blue-500 h-4 w-4 border-r border-b border-blue-500
-          ${state.click_num === 0 ? 'pointer-events-none' : ''}
+          ${ state.click_num === 0         ? 'pointer-events-none' : '' }
+          ${ point?.comp_id  !== undefined ? 'pointer-events-none' : '' }
+          text-white text-sm
         `
       }
       onClick={() => {
@@ -104,6 +111,7 @@ function Point({ x, y }: { x: number, y: number }) {
         onClick(y, x);
       }}
     >
+      { point?.comp_id }
     </div>
   );
 }
